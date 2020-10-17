@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 bool peligro();
@@ -22,6 +23,9 @@ bool peligro(){
 
     cout<<"ingrese la velocidad de la bala ";
     cin>>bala_velocidad_angulo[0];cout<<"ingrese el angulo de la bala ";
-
+    vx_bala=bala_velocidad_angulo[0]* cos(bala_velocidad_angulo[1]);
+    vy_bala=bala_velocidad_angulo[0]* sin(bala_velocidad_angulo[1]);
+    int pos_x_bala, pos_y_bala;
+    pos_x_bala=
 
 }
