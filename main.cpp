@@ -2,7 +2,7 @@
 #include <math.h>
 
 using namespace std;
-bool peligro(int x,int y);
+bool peligro(int x,int y,int z,int w);
 int main()
 {
     int pos_canon_ofensiva[2]={};
@@ -19,13 +19,13 @@ int main()
     distancia=pos_canon_defenciva[0]-pos_canon_ofensiva[0];
     cout<<distancia<<endl;
 
-    if(peligro(pos_canon_ofensiva[0],pos_canon_ofensiva[1])==true){
+    if(peligro(pos_canon_ofensiva[0],pos_canon_ofensiva[1],pos_canon_defenciva[0],pos_canon_defenciva[1])==true){
 
     }
 
     return 0;
 }
-bool peligro(int x,int y){
+bool peligro(int x,int y,int z,int w){
     int bala_velocidad_angulo[2]={};
     float t=0,vx_bala,vy_bala;
 
@@ -38,15 +38,17 @@ bool peligro(int x,int y){
 
     while(true){
         pos_x_bala=x+(vx_bala*t);
-        pos_y_bala=y+(vy_bala*t)-(1/2*(9.81)*(t*t));
-        t+=0.5 ;
-        if(0<(((pos_x_bala-x)^2+(pos_y_bala-y)^2)^(1/2))&&(((pos_x_bala-x)^2+(pos_y_bala-y)^2)^(1/2))<=5){
+        pos_y_bala=y+(vy_bala*t)-((4.99)*(t*t));
+        if(pos_y_bala<0){
+            cout<<"no hay peligro";
+            return false;
+                }
+        cout<<pos_x_bala<<","<<pos_y_bala<<endl;
+        if(0<(((pos_x_bala-z)^2+(pos_y_bala-w)^2)^(1/2))&&(((pos_x_bala-z)^2+(pos_y_bala-w)^2)^(1/2))<=5){
             cout<<"el canon esta en peligro!";
             return true;
         }
-    if(t==100.0){
-        cout<<"no hay peligro";
-        return false;
-    }
+        t+=0.5 ;
+
     }
 }
