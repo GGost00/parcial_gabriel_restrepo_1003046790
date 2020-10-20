@@ -2,8 +2,8 @@
 #include <math.h>
 
 using namespace std;
-int disparos(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia);
-int tiros(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia)
+int disparos(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia,float radio);
+int tiros(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia);
 int main()
 {
     int pos_canon_ofensiva[2]={};
@@ -66,14 +66,14 @@ int main()
     cout<<""<<endl;
    switch (opcion) {
         case 1:
-            cout<<disparos(pos_canon_ofensiva[0],pos_canon_ofensiva[1],pos_canon_defenciva[0],pos_canon_defenciva[1],angulo,distancia);
+            cout<<disparos(pos_canon_ofensiva[0],pos_canon_ofensiva[1],pos_canon_defenciva[0],pos_canon_defenciva[1],angulo,distancia,0.05);
             break;
         case 2:
-            cout<<disparos(pos_canon_defenciva[0],pos_canon_defenciva[1],pos_canon_ofensiva[0],pos_canon_ofensiva[1],angulop,distancia);
+            cout<<disparos(pos_canon_defenciva[0],pos_canon_defenciva[1],pos_canon_ofensiva[0],pos_canon_ofensiva[1],angulop,distancia,0.025);
             break;
-//        case 3:
-
-//        break;
+        case 3:
+            cout<<tiros(pos_canon_defenciva[0],pos_canon_defenciva[1],pos_canon_ofensiva[0],pos_canon_ofensiva[1], angulop,distancia);
+            break;
 //        case 4:
 
 //        break;
@@ -81,7 +81,7 @@ int main()
 
    return 0;
 }
-int disparos(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia){
+int disparos(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia,float radio){
     float vx_bala,vy_bala,t=2,v=0;
     int cont=0,pos_x,pos_y;
 
@@ -95,7 +95,7 @@ int disparos(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia){
             if (pos_y <0){
                 break;
             }
-            if(sqrt(pow(x_2-pos_x,2)+pow(y_2-pos_y,2))<=(0.05*distancia)){
+            if(sqrt(pow(x_2-pos_x,2)+pow(y_2-pos_y,2))<=(radio*distancia)){
                 cout<<"velocidad= "<<v<<", Angulo= "<<angulo*180/M_PI<<",tiempo= "<<t<<endl;
                 cont+=1;
             }
@@ -108,17 +108,32 @@ int disparos(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia){
     return 0;
 }
 int tiros(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia){
-    float vx_bala,vy_bala,t=0,v=0,vx_balad,vy_balad;
+    float vx_bala,vy_bala,t=0,v=0,vx_balad,vy_balad,v_t;
     int cont=0,pos_x,pos_y;
 
     vx_bala=v*cos(angulo);
     vy_bala=v*sin(angulo);
 
-    pos_x=x_1 +vx_bala*2;
-    pos_y=y_1 +vy_bala*2 - (4.901*(4));
+    pos_x=x_1 +vx_bala*2.5;
+    pos_y=y_1 +vy_bala*2.5 - (4.901*(4.25));
 
-    vx_balad=(pos_x-x_2)/0.5;
-    vy_balad = (pos_y-y_2+(4.901*4))/0.5;
+    vx_balad=abs((pos_x-x_2)/0.5);
+
+    v_t=vx_balad*cos(angulo);
+    if(sqrt(pow(x_2-pos_x,2)+pow(y_2-pos_y,2))<=(0.05*distancia)){
+        cout<<"se afecto el canon defencivo";
+    }
+    if(sqrt(pow(x_1-pos_x,2)+pow(y_1-pos_y,2))<=(0.05*distancia)){
+        cout<<"se afecto el canon ofensivo ";
+        cont+=1;
+    }
+    else{
+        cout<<"con un angulo de "<<angulo<<" se puede detener la bala en un tiempo igual a 0.5 s cuando ella pasa por "
+                                       <<pos_x<<","<<pos_y<<"sin afectar a ningun cañon con una velocidad de "<<abs(v_t)<<endl;
+    }
+
+
+
 
     return 0;
 }
