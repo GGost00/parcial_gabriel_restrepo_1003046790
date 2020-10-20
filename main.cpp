@@ -7,15 +7,17 @@ int main()
 {
     int pos_canon_ofensiva[2]={};
     int pos_canon_defenciva[2]={};
-    float t=0,v=0,a=45,angulo=a*M_PI/180;;
+    float t=0,v=0,a=0,angulo;
     int opcion;
 
     cout<<"ingrese la pos x del canon ofencivo ";
     cin>>pos_canon_ofensiva[0];cout<<"ingrese la pos y del canon ofencivo ";
     cin>>pos_canon_ofensiva[1];cout<<"ingrese la pos x del canon defencivo ";
     cin>>pos_canon_defenciva[0];cout<<"ingrese la pos y del canon defencivo ";
-    cin>>pos_canon_defenciva[1];
+    cin>>pos_canon_defenciva[1];cout<<"ingrese el angulo que desesa verificar ";
+    cin>>a;
     int distancia;
+    angulo=a*M_PI/180;
     distancia=pos_canon_defenciva[0]-pos_canon_ofensiva[0];
     cout<<"****************que caso quiere saber*******************"<<endl;
     cout<<"*                                                       *"<<endl;
@@ -83,10 +85,10 @@ int disparos(int x_1,int y_1,int x_2,int y_2, float angulo,int distancia){
     int cont=0,pos_x,pos_y;
 
 
-    for (v=0;v<=100;v+=0.7){
+    for (v=0;v<=100;v+=0.5){
         vx_bala=v*cos(angulo);
         vy_bala=v*sin(angulo);
-        for (t=0;t<=100;t+=0.1){
+        for (t=0;t<=100;t+=0.3){
             pos_x=x_1+vx_bala*t;
             pos_y=y_1 +vy_bala*t - (4.901*(t*t));
             if (pos_y <0){
