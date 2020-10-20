@@ -19,28 +19,50 @@ int main()
     distancia=pos_canon_defenciva[0]-pos_canon_ofensiva[0];
     cout<<"****************que caso quiere saber*******************"<<endl;
     cout<<"*                                                       *"<<endl;
-    cout<<"*   1.Generar disparos (al menos tres) ofensivos que    *"
-          "*     comprometan la integridad del cañón defensivo.    *"<<endl;
+    cout<<"*   1.Generar disparos (al menos tres) ofensivos que    *"<<endl;
+    cout<< "*     comprometan la integridad del canon defensivo.    *"<<endl;
     cout<<"*                                                       *"<<endl;
-    cout<<"*   2.Generar disparos (al menos tres) defensivos que   *"
-          "*     comprometan la integridad del cañón ofensivo.     *"<<endl;
+    cout<<"*   2.Generar disparos (al menos tres) defensivos que   *"<<endl;
+    cout<<"*     comprometan la integridad del canon ofensivo.     *"<<endl;
     cout<<"*                                                       *"<<endl;
-    cout<<"*   3.Dado un disparo ofensivo, generar (al menos tres) * "
-          "*      disparos defensivos que impida que el cañón      * "
-          "*      defensivo sea destruido sin importar si el cañón * "
-          "*      ofensivo pueda ser destruido.                    *"<<endl;
+    cout<<"*   3.Dado un disparo ofensivo, generar (al menos tres) * "<<endl;
+          cout<<"*      disparos defensivos que impida que el canon      * "<<endl;
+          cout<<"*      defensivo sea destruido sin importar si el canon * "<<endl;
+          cout<<"*      ofensivo pueda ser destruido.                    *"<<endl;
     cout<<"*                                                       *"<<endl;
-    cout<<"*   4.Dado un disparo ofensivo, generar (al menos tres) *"
-          "*     disparo defensivos que impidan que los cañones    *"
-          "*     defensivo y ofensivo puedan ser destruidos.       *"<<endl;
+    cout<<"*   4.Dado un disparo ofensivo, generar (al menos tres) *"<<endl;
+          cout<<"*     disparo defensivos que impidan que los canones    *"<<endl;
+          cout<<"*     defensivo y ofensivo puedan ser destruidos.       *"<<endl;
     cout<<"*                                                       *"<<endl;
     cout<<"*********************************************************"<<endl;
     cin>>opcion;
-    switch (opcion) {
-        case 1:
-        int y=disparos(pos_canon_ofensiva[0],pos_canon_ofensiva[1],pos_canon_defenciva[0],pos_canon_defenciva[1],t,v,angulo,distancia);
-        cout<<y;
-        break;
+    float vx_bala,vy_bala;
+    int cont=0,pos_x,pos_y;
+
+
+    for (v=0;v<=100;v+=0.7){
+        vx_bala=v*cos(angulo);
+        vy_bala=v*sin(angulo);
+        for (t=0;t<=100;t+=0.1){
+            pos_x=pos_canon_ofensiva[0]+vx_bala*t;
+            pos_y=pos_canon_ofensiva[1] +vy_bala*t - (4.901*(t*t));
+            if (pos_y <0){
+                break;
+            }
+            if(sqrt(pow(pos_canon_defenciva[0]-pos_x,2)+pow(pos_canon_defenciva[1]-pos_y,2))<=(0.05*distancia)){
+                cout<<v<<","<<angulo<<","<<t<<endl;
+                cont+=1;
+            }
+        if(cont==3){
+            break;
+        }
+
+        }
+    }
+//    switch (opcion) {
+//        case 1:
+
+//        break;
 //        case 2:
 
 //        break;
@@ -50,7 +72,7 @@ int main()
 //        case 4:
 
 //        break;
-    }
+//    }
     //cout<<distancia<<endl;
 
 //    float vx_bala,vy_bala;
