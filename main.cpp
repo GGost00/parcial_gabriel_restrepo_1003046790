@@ -2,7 +2,7 @@
 #include <math.h>
 
 using namespace std;
-int disparos(int x_1,int y_1,int x_2,int y_2,float tiempo,float velocidad, float angulo);
+int disparos(int x_1,int y_1,int x_2,int y_2,float tiempo,float velocidad, float angulo,int distancia);
 int main()
 {
     int pos_canon_ofensiva[2]={};
@@ -38,41 +38,53 @@ int main()
     cin>>opcion;
     switch (opcion) {
         case 1:
-        cout<<disparos(pos_canon_ofensiva[0],pos_canon_ofensiva[1],pos_canon_defenciva[0],pos_canon_defenciva[1],t,v,angulo);
+        int y=disparos(pos_canon_ofensiva[0],pos_canon_ofensiva[1],pos_canon_defenciva[0],pos_canon_defenciva[1],t,v,angulo,distancia);
+        cout<<y;
         break;
-        case 2:
+//        case 2:
 
-        break;
-        case 3:
+//        break;
+//        case 3:
 
-        break;
-        case 4:
+//        break;
+//        case 4:
 
-        break;
+//        break;
     }
     //cout<<distancia<<endl;
 
-    float vx_bala,vy_bala;
+//    float vx_bala,vy_bala;
 
-    for (v=0;v>=100;v+=0.1){
-        vx_bala=v*cos(angulo);
-        vy_bala=v*sin(angulo);
-        for (t=0;t>=100;t+=0.1){
+//    for (v=0;v>=100;v+=0.1){
+//        vx_bala=v*cos(angulo);
+//        vy_bala=v*sin(angulo);
+//        for (t=0;t>=100;t+=0.1){
 
-        }
-    }
+//        }
+//    }
 
-    return 0;
+//    return 0;
 }
-int disparos(int x_1,int y_1,int x_2,int y_2,float tiempo,float velocidad, float angulo){
+int disparos(int x_1,int y_1,int x_2,int y_2,float tiempo,float velocidad, float angulo,float distancia){
     float vx_bala,vy_bala;
+    int cont=0,pos_x,pos_y;
 
 
     for (velocidad=0;velocidad>=100;velocidad+=0.1){
         vx_bala=velocidad*cos(angulo);
         vy_bala=velocidad*sin(angulo);
         for (tiempo=0;tiempo>=100;tiempo+=0.1){
+            pos_x=x_1 +vx_bala*tiempo;
+            pos_y=y_1 +vy_bala*tiempo - (4.901*(tiempo*tiempo));
+            if((((pos_x - x_2)^2)+((pos_y-y_2)^2)^(1/2))<=(0.05*distancia)){
+                cout<<velocidad<<","<<angulo<<","<<tiempo<<endl;
+                cont+=1;
+            }
+            if(cont==3){
+                break;
+            }
 
         }
     }
+    return 0;
 }
